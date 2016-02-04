@@ -1,7 +1,5 @@
-define(function(require){
-    var Backbone = require('backbone'),
-        _ = require('underscore'),
-        Person = require('./PersonModel.js');
+define(['backbone', 'underscore',
+        'src/persons/model/PersonModel.js'], function(Backbone, _, Person){
 
     var Customer = Person.extend({
         defaults: _.extend({}, Person.prototype.defaults, {
@@ -12,7 +10,7 @@ define(function(require){
             },
             skype: ""
         }),
-        url: "/customers",
+        url: "/customers_control",
         idAttribute: "id"
     });
     return Customer;

@@ -1,14 +1,13 @@
 /**
  * Created by Nick on 1/27/2016.
  */
-define(function(require) {
-    var Backbone = require('backbone'),
-        _ = require('underscore'),
-        $ = require('jquery');
+define(['backbone', 'underscore', 'jquery',
+        'text!./template/customerTemplate.htm'],
+    function(Backbone, _, $, customerTemplate) {
 
-    var customerTemplate = _.template(require('text!./templates/customerTemplate.htm'));
+    var CustomersView = Backbone.View.extend({
 
-    var CustomerView = Backbone.View.extend({
+        customerTemplate: customerTemplate,
 
         events: {
         "click #delete": "_delete",
@@ -17,7 +16,8 @@ define(function(require) {
         },
 
         el: function(model){
-            return customerTemplate({model: model})
+            var template = _.template(customerTemplate);
+            return template({model: model});
         },
 
         constructor: function (options) {
@@ -76,5 +76,5 @@ define(function(require) {
             $('body').append(this.$el)
         }
     });
-    return CustomerView;
+    return CustomersView;
 });

@@ -1,15 +1,16 @@
-define(function(require){
-
-var Backbone = require('backbone');
+define(['backbone'], function(Backbone){
 
 var Person = Backbone.Model.extend(
-	{defaults:{
+    {defaults: {
         name: {
             first: "",
             last: ""
         },
         dateOfBirth: ""
-    }}
+    },
+        url: "/persons_control",
+        idAttribute: "id"
+    }
 	);
     return Person;
 });

@@ -1,9 +1,8 @@
 /**
  * Created by Nick on 1/26/2016.
  */
-module.exports =  function(bookshelf){
-    var Person = bookshelf.model.extend({
-        tableName: "Customer"
-    });
-    return Person;
-};
+var bookshelf = require('../bookshelf');
+var Person = bookshelf.Model.extend({
+    tableName: "Person"
+});
+module.exports = Person;
