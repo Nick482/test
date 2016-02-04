@@ -1,9 +1,26 @@
 /**
  * Created by Nick on 2/4/2016.
  */
-define(['backbone', 'underscore', 'jquery',
+define(['backbone', 'underscore', 'jquery', 'validation',
         'text!./template/personTemplate.htm'],
-    function(Backbone, _, $, personTemplate) {
+    function(Backbone, _, $, Validation, personTemplate) {
+
+        _.extend(Backbone.Validation.callbacks, {
+            valid: function (view, attr, selector) {
+                var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                    $group = $el.closest('.form-group');
+
+                $group.removeClass('has-error');
+                $group.find('.help-block').html('').addClass('hidden');
+            },
+            invalid: function (view, attr, error, selector) {
+                var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                    $group = $el.closest('.form-group');
+
+                $group.addClass('has-error');
+                $group.find('.help-block').html(error).removeClass('hidden');
+            }
+        });
 
         var PersonsView = Backbone.View.extend({
 
@@ -36,18 +53,23 @@ define(['backbone', 'underscore', 'jquery',
                 var formattedDate = [year, month, day].join("-");
                 this.model.set("dateOfBirth", formattedDate);
                 this.setElement(this.el(this.model.toJSON()));
-                this.render()
+                this.render();
+
+                Backbone.Validation.bind(this, {model : this.model});
             },
 
             _update: function(event){
+                event.preventDefault();
                 var self = this;
-                this.model.set("dateOfBirth", $("#dateOfBirth").val());
+                console.log(this.$el.find('#dateOfBirth').val());
+                this.model.set("dateOfBirth", this.$el.find('#dateOfBirth').val());
                 this.model.save().done(function(model) {
                     self.model.set(model);
                 })
             },
 
             _delete: function(event){
+                event.preventDefault();
                 console.log(this.model);
                 this.model.destroy({
                     contentType: 'application/json',
@@ -56,6 +78,7 @@ define(['backbone', 'underscore', 'jquery',
             },
 
             _change: function(event){
+                event.preventDefault();
                 var currentTarget = $(event.currentTarget),
                     value = $(event.currentTarget).val(),
                     data = currentTarget.data("attr").split(":");

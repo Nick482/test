@@ -11,7 +11,25 @@ define(['backbone', 'underscore',
             skype: ""
         }),
         url: "/customers_control",
-        idAttribute: "id"
+        idAttribute: "id",
+        validation: {
+            companyName: {
+                required: true,
+                msg: "Please enter company name"
+            },
+            'phone.mobile': {
+                    required: true,
+                    msg: "Please enter mobile phone"
+            },
+            'phone.work': {
+                    required: true,
+                    msg: "Please enter work phone"
+            },
+            skype: {
+                required: true,
+                msg: "Please enter Skype ID"
+            }
+        }
     });
     return Customer;
 });

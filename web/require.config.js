@@ -7,6 +7,7 @@ require.config({
         underscore: 'underscore/underscore',
         jquery: 'jquery/dist/jquery',
         text: 'text/text',
-        backbone: 'backbone/backbone'
+        backbone: 'backbone/backbone',
+        validation: 'backbone-validation/dist/backbone-validation-amd'
     }
 });

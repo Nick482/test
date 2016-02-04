@@ -1,10 +1,27 @@
 /**
  * Created by Nick on 2/4/2016.
  */
-define(['backbone', 'jquery',
+define(['backbone', 'jquery', 'validation',
     'text!./template/personsMainTemplate.htm',
     './model/PersonModel.js',
-    './personsView.js'], function(Backbone, $, mainTemplate, PersonModel, PersonsView) {
+    './personsView.js'], function(Backbone, $, Validation, mainTemplate, PersonModel, PersonsView) {
+
+    _.extend(Backbone.Validation.callbacks, {
+        valid: function (view, attr, selector) {
+            var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                $group = $el.closest('.form-group');
+
+            $group.removeClass('has-error');
+            $group.find('.help-block').html('').addClass('hidden');
+        },
+        invalid: function (view, attr, error, selector) {
+            var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                $group = $el.closest('.form-group');
+
+            $group.addClass('has-error');
+            $group.find('.help-block').html(error).removeClass('hidden');
+        }
+    });
 
     var PersonsMain = Backbone.View.extend({
 
@@ -19,6 +36,8 @@ define(['backbone', 'jquery',
             this.model = new PersonModel();
             this.render();
             this._getrecords();
+
+            Backbone.Validation.bind(this, {model : this.model});
         },
 
         _getrecords: function(){
@@ -34,20 +53,24 @@ define(['backbone', 'jquery',
             })
         },
 
-        _add : function(){
+        _add : function(event){
+            event.preventDefault();
             var self = this;
             this.model.set("dateOfBirth", $("#dateOfBirth").val());
-            this.model.save().done(function(model){
-                    self.model.set(model);
-                    self.personsView = new PersonsView(
-                        {model: self.model}
-                    );
-                    self.model = new PersonModel();
-                }
-
-            );
+            if(this.model.isValid(true)) {
+                this.model.save().done(function (model) {
+                        console.log(model);
+                        self.model.set(model);
+                        self.personsView = new PersonsView(
+                            {model: self.model}
+                        );
+                        self.model = new PersonModel();
+                    }
+                );
+            }
         },
         _change: function(event){
+            event.preventDefault();
             var currentTarget = $(event.currentTarget),
                 value = $(event.currentTarget).val(),
                 data = currentTarget.data("attr").split(":");
