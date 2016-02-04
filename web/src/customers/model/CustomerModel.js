@@ -5,25 +5,37 @@ define(['backbone', 'underscore',
         defaults: _.extend({}, Person.prototype.defaults, {
             companyName: "",
             phone: {
-                mobile: 0,
-                work: 0
+                mobile: "",
+                work: ""
             },
             skype: ""
         }),
         url: "/customers_control",
         idAttribute: "id",
         validation: {
+            'name.first': {
+                required: true,
+                msg: "Please enter first name"
+            },
+            'name.last': {
+                required: true,
+                msg: "Please enter last name"
+            },
+            dateOfBirth: {
+                required: true,
+                msg: "Please enter date of birth"
+            },
             companyName: {
                 required: true,
                 msg: "Please enter company name"
             },
+            'phone.work': {
+                required: true,
+                msg: "Please enter work phone"
+            },
             'phone.mobile': {
                     required: true,
                     msg: "Please enter mobile phone"
-            },
-            'phone.work': {
-                    required: true,
-                    msg: "Please enter work phone"
             },
             skype: {
                 required: true,

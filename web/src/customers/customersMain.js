@@ -1,10 +1,27 @@
 /**
  * Created by Nick on 2/4/2016.
  */
-define(['backbone', 'jquery',
+define(['backbone', 'jquery', 'validation',
         'text!./template/customersMainTemplate.htm',
         './model/CustomerModel.js',
-        './customersView.js'], function(Backbone, $, customersMainTemplate, CustomerModel, CustomersView) {
+        './customersView.js'], function(Backbone, $, Validation, customersMainTemplate, CustomerModel, CustomersView) {
+
+    _.extend(Backbone.Validation.callbacks, {
+        valid: function (view, attr, selector) {
+            var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                $group = $el.closest('.form-group');
+
+            $group.removeClass('has-error');
+            $group.find('.help-block').html('').addClass('hidden');
+        },
+        invalid: function (view, attr, error, selector) {
+            var $el = view.$('[name=' + '"' + attr + '"' + ']'),
+                $group = $el.closest('.form-group');
+
+            $group.addClass('has-error');
+            $group.find('.help-block').html(error).removeClass('hidden');
+        }
+    });
 
     var CustomersMain = Backbone.View.extend({
 
@@ -19,6 +36,8 @@ define(['backbone', 'jquery',
             this.model = new CustomerModel();
             this.render();
             this._getrecords();
+
+            Backbone.Validation.bind(this, {model : this.model});
         },
 
         _getrecords: function(){
@@ -34,18 +53,21 @@ define(['backbone', 'jquery',
             })
         },
 
-        _add : function(){
-            var self = this;
+        _add : function(event){
+            event.preventDefault();
             this.model.set("dateOfBirth", $("#dateOfBirth").val());
-            this.model.save().done(function(model){
-                    self.model.set(model);
-                    self.customersView = new CustomersView(
-                        {model: self.model}
-                    );
-                    self.model = new CustomerModel();
-                }
-
-            );
+            var self = this;
+            if(this.model.isValid(true)) {
+                this.model.save().done(function (model) {
+                        self.model.set(model);
+                        console.log(self.model);
+                        self.customersView = new CustomersView(
+                            {model: self.model}
+                        );
+                        self.model = new CustomerModel();
+                    }
+                );
+            }
         },
         _change: function(event){
             var currentTarget = $(event.currentTarget),

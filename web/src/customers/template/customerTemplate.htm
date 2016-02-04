@@ -1,18 +1,39 @@
-<div id="CustomersView">
-    <label for="first">FN</label>
-    <input value="<%=model.name.first%>" type="text" class="name" id="first" data-attr="name:first">
-    <label for="last">LN</label>
-    <input value="<%=model.name.last%>" type="text" class="name" id="last" data-attr="name:last">
-    <label for="dateOfBirth">DOB</label>
-    <input value="<%=model.dateOfBirth%>" type="date" id="dateOfBirth" data-attr="dateOfBirth">
-    <label for="companyName">Company</label>
-    <input value="<%=model.companyName%>" type="text" id="companyName" data-attr="companyName">
-    <label for="mobile">Mobile</label>
-    <input value="<%=model.phone.mobile%>" type="text" class="phone" id="mobile" data-attr="phone:mobile">
-    <label for="work">WorkPhone</label>
-    <input value="<%=model.phone.work%>" type="text" class="phone" id="work" data-attr="phone:work">
-    <label for="skype">Skype</label>
-    <input value="<%=model.skype%>" type="text" id="skype" data-attr="skype">
+<form role="form" class="flowForm">
+    <div class="form-group">
+        <label for="first">FN:</label>
+        <input id="first" value="<%= model.name.first %>" name="name.first" class="form-control flowInput" data-attr="name:first" type="text" placeholder="Name">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="last">LN:</label>
+        <input id="last" value="<%= model.name.last %>" name="name.last" class="form-control flowInput" data-attr="name:last" type="text" placeholder="LastName">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="dateOfBirth">DOB:</label>
+        <input id="dateOfBirth" value="<%= model.dateOfBirth %>" name="dateOfBirth" class="form-control flowInput" data-attr="dateOfBirth" type="date">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="companyName">Company:</label>
+        <input id="companyName" value="<%= model.companyName %>" name="companyName" class="form-control flowInput" data-attr="companyName" type="text" placeholder="Company Name">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="work">Work Phone:</label>
+        <input id="work" value="<%= model.phone.work %>" name="phone.work" class="form-control flowInput" data-attr="phone.work" type="text" placeholder="Work Phone">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="mobile">Mobile Phone:</label>
+        <input id="mobile" value="<%= model.phone.mobile %>" name="phone.mobile" class="form-control flowInput" data-attr="phone:mobile" type="text" placeholder="Mobile Phone">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="skype">Skype:</label>
+        <input id="skype" value="<%= model.skype %>" name="skype" class="form-control flowInput" data-attr="skype" type="text" placeholder="Skype">
+        <span class="help-block hidden"></span>
+    </div>
     <button id="update">Update</button>
     <button id="delete">Delete</button>
-</div>
+</form>

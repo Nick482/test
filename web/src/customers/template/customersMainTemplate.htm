@@ -1,17 +1,38 @@
-<div id="container">
-    <label for="first">FN</label>
-    <input type="text" class="name" id="first" data-attr="name:first">
-    <label for="last">LN</label>
-    <input type="text" class="name" id="last" data-attr="name:last">
-    <label for="dateOfBirth">DOB</label>
-    <input type="date" id="dateOfBirth" data-attr="dateOfBirth">
-    <label for="companyName">Company</label>
-    <input type="text" id="companyName" data-attr="companyName">
-    <label for="mobile">Mobile</label>
-    <input type="text" class="phone" id="mobile" data-attr="phone:mobile">
-    <label for="work">WorkPhone</label>
-    <input type="text" class="phone" id="work" data-attr="phone:work">
-    <label for="skype">Skype</label>
-    <input type="text" id="skype" data-attr="skype">
+<form role="form" class="flowForm">
+    <div class="form-group">
+        <label for="first">FN:</label>
+        <input id="first" name="name.first" class="form-control flowInput" data-attr="name:first" type="text" placeholder="Name">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="last">LN:</label>
+        <input id="last" name="name.last" class="form-control flowInput" data-attr="name:last" type="text" placeholder="LastName">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="dateOfBirth">DOB:</label>
+        <input id="dateOfBirth" name="dateOfBirth" class="form-control flowInput" data-attr="dateOfBirth" type="date">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="companyName">Company:</label>
+        <input id="companyName" name="companyName" class="form-control flowInput" data-attr="companyName" type="text" placeholder="Company Name">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="work">Work Phone:</label>
+        <input id="work" name="phone.work" class="form-control flowInput" data-attr="phone:work" type="text" placeholder="Work Phone">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="mobile">Mobile Phone:</label>
+        <input id="mobile" name="phone.mobile" class="form-control flowInput" data-attr="phone:mobile" type="text" placeholder="Mobile Phone">
+        <span class="help-block hidden"></span>
+    </div>
+    <div class="form-group">
+        <label for="skype">Skype:</label>
+        <input id="skype" name="skype" class="form-control flowInput" data-attr="skype" type="text" placeholder="Skype">
+        <span class="help-block hidden"></span>
+    </div>
     <button id="add">Create</button>
-</div>
+</form>

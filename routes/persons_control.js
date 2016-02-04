@@ -2,6 +2,7 @@
  * Created by Nick on 2/4/2016.
  */
 var Person = require('../models/Person');
+var Checkit = require('checkit');
 
 module.exports = function(router) {
     router.get('/persons_control', function (req, res, next) {
@@ -18,24 +19,36 @@ module.exports = function(router) {
     });
 
     router.post('/persons_control', function (req, res, next) {
+        var checkit = new Checkit({
+           name: 'object',
+           dateOfBirth: 'alphaDash'
+        });
         var person = new Person(req.body);
-        person.save().then(function (model) {
-            res.status(200).send(model)
-        })
+        checkit.run(req.body).then(function(validated){
+            person.save().then(function (model) {
+                res.status(200).send(model)
+            })
+        }).catch(function(error){
+            console.log("error occurred")
+        });
     });
 
     router.put('/persons_control', function (req, res, next) {
+        var checkit = new Checkit({
+            name: 'object',
+            dateOfBirth: 'alphaDash'
+        });
         var person = new Person(req.body);
-        if (person.attributes.dateOfBirth == "") {
-            person.attributes.dateOfBirth = null
-        }
-        person.save();
-        res.status(200).send(person);
+        checkit.run(req.body).then(function(validated){
+            person.save();
+            res.status(200).send(person);
+        }).catch(function(error){
+            console.log("error occurred")
+        })
     });
 
     router.delete('/persons_control', function (req, res, next) {
         var person = new Person(req.body);
-        console.log(person);
         person.destroy().then(function () {
                 res.status(200)
             }

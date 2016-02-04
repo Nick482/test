@@ -50,7 +50,7 @@ define(['backbone', 'underscore', 'jquery', 'validation',
                 var month = date.getDate().length > 1 ? date.getDate() : "0" + date.getDate();
                 var day = date.getDay().length > 1 ? date.getDay() : "0" + date.getDay();
 
-                var formattedDate = [year, month, day].join("-");
+                var formattedDate = [year, day, month].join("-");
                 this.model.set("dateOfBirth", formattedDate);
                 this.setElement(this.el(this.model.toJSON()));
                 this.render();
@@ -60,12 +60,13 @@ define(['backbone', 'underscore', 'jquery', 'validation',
 
             _update: function(event){
                 event.preventDefault();
-                var self = this;
-                console.log(this.$el.find('#dateOfBirth').val());
                 this.model.set("dateOfBirth", this.$el.find('#dateOfBirth').val());
-                this.model.save().done(function(model) {
-                    self.model.set(model);
-                })
+                var self = this;
+                if(this.model.isValid(true)) {
+                    this.model.save().done(function (model) {
+                        self.model.set(model);
+                    })
+                }
             },
 
             _delete: function(event){
